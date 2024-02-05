@@ -64,7 +64,7 @@ function Module.Start()
 	for _, WidgetModule in pairs(WidgetsCache) do
 		WidgetModule.CloseWidget()
 	end
-	Module.OpenWidget("AlwaysOnWidget")
+	-- Module.ToggleWidget("AlwaysOnWidget", true)
 end
 
 function Module.Init(otherSystems)
