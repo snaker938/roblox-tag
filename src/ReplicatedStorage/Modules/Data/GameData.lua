@@ -1,6 +1,6 @@
 local Module = {}
 
-Module.numPeopleToStart = 1
+Module.numPeopleToStart = 2
 Module.TotalTimeForBombToExplode = 30
 Module.TagCoolDown = 7
 

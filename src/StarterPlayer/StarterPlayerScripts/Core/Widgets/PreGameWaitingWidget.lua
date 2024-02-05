@@ -27,7 +27,7 @@ Module.WidgetTrove = Trove.new()
 Module.Open = false
 
 function Module.UpdateWidget()
-    MorePeopleText.Visible = false
+    MorePeopleText.Visible = true
     MorePeopleText.Text = "Waiting for " .. GameData.numPeopleToStart - #Players:GetPlayers() .. " more players to join..."
 end
 
