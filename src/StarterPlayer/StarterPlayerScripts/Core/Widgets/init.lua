@@ -1,3 +1,9 @@
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local ReplicatedModules = require(ReplicatedStorage:WaitForChild('Modules'))
+
+local RemoteService = ReplicatedModules.Services.RemoteService
+local ResetGameEvent = RemoteService:GetRemote("ResetGameEvent", "RemoteEvent", false)
+
 local WidgetsCache = {}
 
 local SystemsContainer = {}
@@ -37,9 +43,9 @@ function Module.IsWidgetOpen(widgetName)
 	return cachedModule.Open
 end
 
-function Module.ToggleAllWidgets(enabled)
+function Module.ToggleAllWidgets(enabled, WidgetIgnoreList)
 	for widgetName, WidgetModule in pairs(WidgetsCache) do
-		if table.find(DEFAULT_WIDGET_IGNORE_LIST, widgetName) then
+		if table.find(DEFAULT_WIDGET_IGNORE_LIST, widgetName) or table.find(WidgetIgnoreList, widgetName) then
 			continue
 		end
 		if enabled then
@@ -64,7 +70,7 @@ function Module.Start()
 	for _, WidgetModule in pairs(WidgetsCache) do
 		WidgetModule.CloseWidget()
 	end
-	-- Module.ToggleWidget("AlwaysOnWidget", true)
+	Module.ToggleWidget("PreGameWaitingWidget", true)
 end
 
 function Module.Init(otherSystems)
@@ -86,6 +92,11 @@ function Module.Init(otherSystems)
 	end
 
 	print("------------ STARTED WIDGET MODULES ------------")
+
+	ResetGameEvent.OnClientEvent:Connect(function()
+		Module.ToggleAllWidgets(false, {})
+		Module.ToggleWidget("PreGameWaitingWidget", true)
+	end)
 end
 
 return Module
