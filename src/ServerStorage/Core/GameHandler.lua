@@ -67,9 +67,7 @@ end
 
 
 function Module.DestroyPlayers(entities)
-    print("Destroying players!")
     for _, entity in pairs(entities) do
-        print(entity.Name .. " was destroyed!")
         local SpawnLocation = game.Workspace.SpawnRoom.EndSpawn
         entity.Character:PivotTo(SpawnLocation.CFrame)
     
@@ -82,7 +80,6 @@ function Module.DestroyPlayers(entities)
     end
 
     if #Module.InGamePlayers == 1 then
-        -- print(Module.InGamePlayers[1].Name .. " has won the game!")
         DisableCheckingEvent:FireAllClients()
 
         -- Teleport all players to the lobby
@@ -112,14 +109,11 @@ function Module.TagPlayers(localPlayer, entities)
         return
     end
 
-    print(localPlayer.Name .. " tagged " .. entities[1].Name)
-
     if #entities == 0 then
         return
     end
 
     if os.clock() - Module.LastTagTime < GameData.TagCoolDown then
-        print("Cannot tag for another " .. GameData.TagCoolDown - (os.clock() - Module.LastTagTime) .. " seconds!")
         return
     end
 
